@@ -1,0 +1,53 @@
+class GradeManager:
+    def __init__(self):
+        self.grades = {}
+        
+    def input_grades(self):
+        while True:
+            subject = input("Enter the subject (or 'exit' to finish): ")
+            if subject.lower() == 'exit':
+                break
+            try:
+                grade = float(input(f"Enter the grade for {subject}: "))
+                self.grades[subject] = grade
+            except ValueError:
+                print("Invalid input. Please enter a numeric grade.")
+                
+    def calculate_average(self):
+        if not self.grades:
+            print("No grades available to calculate average.")
+            return None
+        average = sum(self.grades.values()) / len(self.grades)
+        return average
+
+    def determine_letter_grade(self, average):
+        if average >= 90:
+            return 'A'
+        elif average >= 80:
+            return 'B'
+        elif average >= 70:
+            return 'C'
+        elif average >= 60:
+            return 'D'
+        else:
+            return 'F'
+    
+    def display_results(self):
+        average = self.calculate_average()
+        if average is not None:
+            letter_grade = self.determine_letter_grade(average)
+            print("\n--- Grade Summary ---")
+            print("Subject Grades:")
+            for subject, grade in self.grades.items():
+                print(f"{subject}: {grade}")
+            print(f"Average Grade: {average:.2f}")
+            print(f"Letter Grade: {letter_grade}")
+        print("---------------------")
+
+def main():
+    manager = GradeManager()
+    manager.input_grades()
+    manager.display_results()
+
+if __name__ == "__main__":
+    main()
